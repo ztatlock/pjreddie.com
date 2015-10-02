@@ -103,11 +103,43 @@ p
 
 If you have the hypothesis that `x` implies `y`, you can `apply` that hypothesis to `x` to get `y`.
 
-In this example we prove modus ponens. We know that `(p -> q)` and we assume `p` so we can use `apply` to turn our assumption `p` into `q`.
+So if your goal is `y`, then applying a hypothesis that `x` implies `y`
+will reduce your goal to `x`.  Here's how it works in a "backwards
+reasoning" style for modus ponenes:
 
 <div class=example>
 <div class=code>
-<pre><span class=checked>Lemma modus_ponens:
+<pre><span class=checked>Lemma modus_ponens_bwd:
+  forall p q : Prop, (p -> q) -> p -> q.
+Proof.
+  intros.</span>
+  apply H.
+  assumption.
+Qed.
+</pre>
+</div>
+<div class=context>
+<pre>
+1 subgoal
+p : Prop
+q : Prop
+H : p -> q
+H0 : p
+-----------(1/1)
+q
+</pre>
+</div>
+</div>
+
+
+You can also apply one hypothesis to another hypothesis,
+which is a more "forward reasoning" style.
+In this example we prove modus ponens again.
+We know that `(p -> q)` and we assume `p` so we can use `apply` to turn our assumption `p` into `q`.
+
+<div class=example>
+<div class=code>
+<pre><span class=checked>Lemma modus_ponens_fwd:
   forall p q : Prop, (p -> q) -> p -> q.
 Proof.
   intros.</span>
@@ -417,7 +449,15 @@ Qed.
 (* apply: if you have the hypothesis that x implies y,
     you can apply that hypothesis to x to get y *)
 
-Lemma modus_ponens:
+Lemma modus_ponens_bwd:
+  forall p q : Prop, (p -> q) -> p -> q.
+Proof.
+  intros.
+  apply H.
+  assumption.
+Qed.
+
+Lemma modus_ponens_fwd:
   forall p q : Prop, (p -> q) -> p -> q.
 Proof.
   intros.
